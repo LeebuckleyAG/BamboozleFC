@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import type { Question } from "../types";
 import { CORRECT_PHRASES, WRONG_PHRASES, randomPhrase, randomQuip } from "../utils/scoring";
+import Mascot from "./Mascot";
 
 interface BamboozleMomentProps {
   correct: boolean;
@@ -21,13 +22,16 @@ export default function BamboozleMoment({ correct, question, pointsGained }: Bam
       }`}
     >
       <div className="flex items-center justify-between gap-2">
-        <span
-          className={`font-tele text-3xl leading-none crt-text tracking-wide ${
-            correct ? "text-[var(--tx-green)]" : "text-[var(--tx-red)]"
-          }`}
-        >
-          {headline}
-        </span>
+        <div className="flex items-center gap-2 min-w-0">
+          <Mascot size={32} mood={correct ? "happy" : "confused"} className="shrink-0" />
+          <span
+            className={`font-tele text-3xl leading-none crt-text tracking-wide truncate ${
+              correct ? "text-[var(--tx-green)]" : "text-[var(--tx-red)]"
+            }`}
+          >
+            {headline}
+          </span>
+        </div>
         {correct && pointsGained > 0 && (
           <span className="font-tele text-2xl text-[var(--tx-yellow)] crt-text shrink-0">
             +{pointsGained}
