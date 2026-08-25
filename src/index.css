@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+:root {
+  --tx-black: #000000;
+  --tx-panel: #05070a;
+  --tx-panel-2: #0a0e14;
+  --tx-cyan: #29f1e8;
+  --tx-yellow: #ffe400;
+  --tx-red: #ff3b30;
+  --tx-green: #35e28a;
+  --tx-white: #f1f4f2;
+  --tx-magenta: #ff3fd8;
+  --tx-blue: #2e6bff;
+  --tx-border: #1d2530;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #000;
+  color: var(--tx-white);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+.font-display {
+  font-family: "Press Start 2P", "IBM Plex Mono", monospace;
+}
+
+.font-tele {
+  font-family: "VT323", "IBM Plex Mono", monospace;
+}
+
+.font-mono {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* Scrollbar - keep it quiet */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #1d2530; }
+
+/* Focus states - always visible, never rely on colour alone */
+:focus-visible {
+  outline: 3px solid var(--tx-yellow);
+  outline-offset: 2px;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ---------------- CRT EFFECTS ---------------- */
+
+.crt-on .crt-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-on .crt-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.18) 0px,
+    rgba(0, 0, 0, 0.18) 1px,
+    transparent 2px,
+    transparent 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+.crt-on .crt-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 41;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(0, 0, 0, 0) 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.crt-on .crt-flicker {
+  animation: crt-flicker 6.5s infinite;
+}
+
+@keyframes crt-flicker {
+  0%, 96%, 100% { opacity: 1; }
+  97% { opacity: 0.93; }
+  98% { opacity: 1; }
+  99% { opacity: 0.96; }
+}
+
+.crt-on .crt-text {
+  text-shadow: 0 0 1px currentColor, 0.6px 0 rgba(255, 63, 216, 0.35), -0.6px 0 rgba(41, 241, 232, 0.35);
+}
+
+.crt-on .crt-glow {
+  box-shadow: 0 0 24px rgba(41, 241, 232, 0.06) inset;
+}
+
+.crt-bezel {
+  border-radius: 22px;
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 10px #0c0f13,
+    0 0 40px rgba(0,0,0,0.8),
+    0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .crt-on .crt-flicker { animation: none; }
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+.reduce-motion * {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* High contrast mode */
+.high-contrast {
+  --tx-white: #ffffff;
+}
+.high-contrast .crt-text {
+  text-shadow: none;
+}
+.high-contrast .tx-dim {
+  opacity: 1 !important;
+}
+
+/* Teletext wipe transition */
+@keyframes tele-wipe {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+.tele-wipe {
+  animation: tele-wipe 0.35s steps(14) both;
+}
+
+@keyframes score-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+.score-pop {
+  animation: score-pop 0.4s ease-out both;
+}
+
+@keyframes flash-green {
+  0% { background-color: rgba(53, 226, 138, 0.35); }
+  100% { background-color: transparent; }
+}
+.flash-green { animation: flash-green 0.6s ease-out both; }
+
+@keyframes flash-red {
+  0% { background-color: rgba(255, 59, 48, 0.35); }
+  100% { background-color: transparent; }
+}
+.flash-red { animation: flash-red 0.6s ease-out both; }
+
+@keyframes pulse-urgent {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.pulse-urgent { animation: pulse-urgent 0.6s ease-in-out infinite; }
+
+@keyframes marquee-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.blink { animation: marquee-blink 1s steps(1) infinite; }
